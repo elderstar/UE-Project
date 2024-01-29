@@ -85,8 +85,9 @@ void ALMADefaultCharacter::MoveRight(float Value)
 void ALMADefaultCharacter::ChangeArmLength(float Value)
 {
 	Value = ArmLength + Value * ZoomSpeed;
-	if (Value > MaxArmLength || Value < MinArmLength)
-		return;
-	ArmLength = Value;
-	SpringArmComponent->TargetArmLength = ArmLength;
+	if (Value < MaxArmLength && Value > MinArmLength)
+	{
+		ArmLength = Value;
+		SpringArmComponent->TargetArmLength = ArmLength;
+	}
 }
