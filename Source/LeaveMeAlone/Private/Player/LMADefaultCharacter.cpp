@@ -70,7 +70,6 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("ChangeArmLength", this, &ALMADefaultCharacter::ChangeArmLength);
-	//PlayerInputComponent->BindAction( ("ChangeArmLength", IE_Pressed, this, &ALMADefaultCharacter::ChangeArmLength);
 }
 
 void ALMADefaultCharacter::MoveForward(float Value) 
