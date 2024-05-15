@@ -132,7 +132,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 void ALMADefaultCharacter::StartSprinting() 
 {
-	if (Stamina > 5.0f)
+	if (Stamina > 5.0f && GetCharacterMovement()->Velocity.Length() > KINDA_SMALL_NUMBER)
 	{
 		isSprinting = true;
 		GetCharacterMovement()->MaxWalkSpeed = SprintVelocity;
@@ -158,7 +158,7 @@ void ALMADefaultCharacter::UpdateStamina(float DeltaTime)
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, FString::Printf(TEXT("Stamina = %f"), Stamina));
 	}
 
-	if (Stamina < 1)
+	if (Stamina < KINDA_SMALL_NUMBER || GetCharacterMovement()->Velocity.Length() < KINDA_SMALL_NUMBER)
 	{
 		StopSprinting();
 	}
