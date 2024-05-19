@@ -12,6 +12,7 @@
 #include "Components/LMAHealthComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Engine.h"
+#include "Components/LMAWeaponComponent.h"
 
 // Sets default values
 ALMADefaultCharacter::ALMADefaultCharacter()
@@ -20,6 +21,7 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
+	WeaponComponent = CreateDefaultSubobject<ULMAWeaponComponent>("Weapon");
 
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -124,10 +126,26 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ALMADefaultCharacter::StartSprinting);
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ALMADefaultCharacter::StopSprinting);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::StartFire);
+	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::StopFire);
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Reload);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("ChangeArmLength", this, &ALMADefaultCharacter::ChangeArmLength);
+}
+
+bool ALMADefaultCharacter::IsMovingBackwards() const
+{
+	FVector Velocity = GetVelocity();
+	FVector ForwardVector = GetActorForwardVector();
+
+	Velocity.Normalize();
+	ForwardVector.Normalize();
+
+	float DotProduct = FVector::DotProduct(Velocity, ForwardVector);
+
+	return DotProduct < 0;
 }
 
 void ALMADefaultCharacter::StartSprinting() 
@@ -166,6 +184,10 @@ void ALMADefaultCharacter::UpdateStamina(float DeltaTime)
 
 void ALMADefaultCharacter::MoveForward(float Value)
 {
+	if (IsMovingBackwards())
+	{
+		StopSprinting();
+	}
 	AddMovementInput(GetActorForwardVector(), Value);
 }
 
