@@ -46,9 +46,6 @@ void ALMADefaultCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
-	AActor* OwnerComponent = GetOwner();
-
 	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
 
 	if (CursorMaterial)
