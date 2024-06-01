@@ -33,6 +33,7 @@ public:
 	// Sets default values for this actor's properties
 	ALMABaseWeapon();
 	FOnAmmoDepleted OnAmmoDepleted; 
+	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
 	 
 	virtual void Tick(float DeltaTime) override;
 	void Fire();

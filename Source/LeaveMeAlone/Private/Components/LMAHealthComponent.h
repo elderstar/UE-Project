@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "LMAHealthComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCharIsDead);
 DECLARE_MULTICAST_DELEGATE(FOnDeath);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
 
@@ -21,8 +22,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	UFUNCTION(BlueprintCallable)
-	float GetHealth() const { return Health; }
+	float GetHealth() const { return Health; };
 
+	UPROPERTY(BlueprintAssignable, Category = "Health")
+	FCharIsDead FCharIsDead;
 	FOnDeath OnDeath;
 	FOnHealthChanged OnHealthChanged;
 	UFUNCTION(BlueprintCallable)
@@ -40,7 +43,7 @@ protected:
 
 private:
 	float Health = 0.0f;
-	
+
 	UFUNCTION()
 	void OnTakeAnyDamage(
 		AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);

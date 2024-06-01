@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TimerManager.h"
+#include <Weapon/LMABaseWeapon.h>
 #include "LMAWeaponComponent.generated.h"
 
 class ALMABaseWeapon;
@@ -21,6 +22,7 @@ public:
 	 
 	void Fire();
 	void StartFire();
+	UFUNCTION(BlueprintCallable)
 	void StopFire();
 	void Reload();
 
@@ -28,6 +30,9 @@ public:
 	void OnAmmoDepletedBroadcast();
 
 protected:
+	UFUNCTION(BlueprintCallable)
+	bool GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	TSubclassOf<ALMABaseWeapon> WeaponClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")

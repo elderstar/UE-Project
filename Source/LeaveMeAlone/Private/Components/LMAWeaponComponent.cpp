@@ -107,6 +107,16 @@ void ULMAWeaponComponent::OnAmmoDepletedBroadcast()
 	Reload();
 }
 
+bool ULMAWeaponComponent::GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const
+{
+	if (Weapon)
+	{
+		AmmoWeapon = Weapon->GetCurrentAmmoWeapon();
+		return true;
+	}
+	return false;
+}
+
 // Called when the game starts
 void ULMAWeaponComponent::BeginPlay()
 {

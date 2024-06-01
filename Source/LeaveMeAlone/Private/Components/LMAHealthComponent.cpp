@@ -2,6 +2,7 @@
 
 
 #include "Components/LMAHealthComponent.h"
+#include <Subsystems/PanelExtensionSubsystem.h>
 
 // Sets default values for this component's properties
 ULMAHealthComponent::ULMAHealthComponent()
@@ -24,6 +25,7 @@ void ULMAHealthComponent::BeginPlay()
 	OnHealthChanged.Broadcast(Health);
 
 	AActor* OwnerComponent = GetOwner();
+	
 	if (OwnerComponent)
 	{
 		OwnerComponent->OnTakeAnyDamage.AddDynamic(this, &ULMAHealthComponent::OnTakeAnyDamage);
@@ -62,6 +64,7 @@ void ULMAHealthComponent::OnTakeAnyDamage(
 	if (IsDead())
 	{
 		OnDeath.Broadcast();
+		FCharIsDead.Broadcast();
 	}
 }
 
