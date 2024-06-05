@@ -46,8 +46,8 @@ void ALMADefaultCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
-
+	HealthComponent->OnDeath.AddUniqueDynamic(this, &ALMADefaultCharacter::OnDeath);
+	
 	if (CursorMaterial)
 	{
 		CurrentCursor = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), CursorMaterial, CursorSize, FVector(0));

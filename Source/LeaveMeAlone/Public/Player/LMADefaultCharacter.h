@@ -68,6 +68,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool isSprinting = false;
 
+	UFUNCTION()
+	void OnDeath();
+
 	void StartSprinting();
 	void StopSprinting();
 	void UpdateStamina(float DeltaTime);
@@ -84,7 +87,7 @@ private:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void ChangeArmLength(float Value);
-	void OnDeath();
+	
 	void RotationPlayerOnCursor();
 	void OnHealthChanged(float NewHealth);
 	bool IsMovingBackwards() const;

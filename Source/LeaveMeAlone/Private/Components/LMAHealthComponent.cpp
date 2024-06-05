@@ -64,7 +64,6 @@ void ULMAHealthComponent::OnTakeAnyDamage(
 	if (IsDead())
 	{
 		OnDeath.Broadcast();
-		FCharIsDead.Broadcast();
 	}
 }
 

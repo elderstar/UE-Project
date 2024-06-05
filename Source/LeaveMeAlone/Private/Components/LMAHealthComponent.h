@@ -6,8 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "LMAHealthComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCharIsDead);
-DECLARE_MULTICAST_DELEGATE(FOnDeath);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+
+//DECLARE_MULTICAST_DELEGATE(FOnDeath);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -23,11 +24,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	float GetHealth() const { return Health; };
-
 	UPROPERTY(BlueprintAssignable, Category = "Health")
-	FCharIsDead FCharIsDead;
 	FOnDeath OnDeath;
 	FOnHealthChanged OnHealthChanged;
+
 	UFUNCTION(BlueprintCallable)
 	bool IsDead() const;
 
